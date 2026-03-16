@@ -39,7 +39,7 @@ public class ServiceES {
                 // Используем стратегию для сохранения
                 exportStrategy.export(headerRow, chunk, outputPath);
                 final int progress = i / dataRows.size() * 100; // (int) (double)
-                String message = String.format("%d%d files", fileCount, totalFiles);
+                String message = fileCount + " file";
 
                 // Передаем прогресс обратно в Controller/View
                 if (progressCallback != null) {
@@ -47,7 +47,7 @@ public class ServiceES {
                 }
             }
             if (progressCallback != null) {
-                progressCallback.accept(100, "Done");}
+                progressCallback.accept(100, "Done. Total files: "+totalFiles);}
             }
         }
         private int findFirstDataRow(Sheet sheet) {
