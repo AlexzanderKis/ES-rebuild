@@ -43,12 +43,14 @@ public class AppController {
         try {
             rowsPerFile = Integer.parseInt(viewMainFrameES.rowsPerFileField.getText()) - 1; // -1 чтобы не считало первую строку
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(viewMainFrameES, "Choose correct number of strings", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(viewMainFrameES,
+                    "Choose correct number of strings", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         if (inputPath.isEmpty() || outputPath.isEmpty()) {
-            JOptionPane.showMessageDialog(viewMainFrameES, "Choose file and folder to save", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(viewMainFrameES,
+                    "Choose file and folder to save", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -57,28 +59,45 @@ public class AppController {
         SaveExporterStrategy strategy = SaveExporterStrategyFactory.getExtension(formatStr);
 
         viewMainFrameES.startButton.setEnabled(false);
-//        viewMainFrameES.appendLog("Logging...");
         viewMainFrameES.setProgressBar(0, "Processing...");
+
+// стартовое сообщение + очищаем лог перед новым запуском
+        viewMainFrameES.logArea.setText("");
+        viewMainFrameES.appendLog("Logging...");
+        viewMainFrameES.appendLog("Source file: "+inputPath);
+//        viewMainFrameES.appendLog("Saving folder: "+outputPath);
 
 // Запуск в отдельном потоке
         new Thread(() -> {
             try {
-                serviceES.splitFile(inputPath, outputPath, baseName, rowsPerFile, strategy, (progress, msg) -> {
+                serviceES.splitFile(inputPath, outputPath, baseName, rowsPerFile, strategy,
+                         (progress, message) -> {
 
 // Обновляем UI в потоке диспетчеризации Swing
-                    SwingUtilities.invokeLater(() -> viewMainFrameES.setProgressBar(progress, msg));
-                });
+                             SwingUtilities.invokeLater(() -> {
+                                 viewMainFrameES.setProgressBar(progress, message);
+// Выводим в лог информацию о сохранении каждой части
+                                 viewMainFrameES.appendLog("Saved file: "+message);
+                             });
+                         });
 
                 SwingUtilities.invokeLater(() -> {
-                    JOptionPane.showMessageDialog(viewMainFrameES, "Split well done", "Done", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(viewMainFrameES,
+                            "Split well done", "Done", JOptionPane.INFORMATION_MESSAGE);
+                    viewMainFrameES.appendLog("LOG DONE.");
                 });
             } catch (Exception e) {
                 SwingUtilities.invokeLater(() -> {
                     JOptionPane.showMessageDialog(viewMainFrameES, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    viewMainFrameES.appendLog("ERROR: " + e.getMessage());
                 });
                 e.fillInStackTrace();
             } finally {
-                SwingUtilities.invokeLater(() -> viewMainFrameES.startButton.setEnabled(true));
+                SwingUtilities.invokeLater(() -> {
+                    viewMainFrameES.startButton.setEnabled(true);
+                    viewMainFrameES.appendLog("Saving folder: "+outputPath);
+                    viewMainFrameES.appendLog("--- Process over ---");
+                });
             }
         }).start();
     }

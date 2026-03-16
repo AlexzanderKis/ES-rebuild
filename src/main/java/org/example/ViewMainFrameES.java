@@ -13,17 +13,14 @@ public class ViewMainFrameES extends JFrame {
     JButton outputBrowseButton = new JButton("Browse...");
     JButton startButton = new JButton("SPLIT");
     JProgressBar progressBar = new JProgressBar();
-//    JTextArea logArea = new JTextArea();
+    JTextArea logArea = new JTextArea(8,40);
     JComboBox<String> formatComboBox;
 
     public ViewMainFrameES(){
         setTitle("ExcelSplitter");
-        setSize(550, 310);
+        setSize(550, 450);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridBagLayout());
-
-//        logArea.setEditable(false);
-//        add(new JScrollPane(logArea), BorderLayout.CENTER);
 
         initComponents();
         layoutComponents();
@@ -42,6 +39,10 @@ public class ViewMainFrameES extends JFrame {
                 "Web XML (*.xml)"
         });
         formatComboBox.setSelectedIndex(0);
+
+        logArea.setEditable(false);
+        logArea.setFont(new Font("Consolas", Font.PLAIN, 12));
+        logArea.setMargin(new Insets(5,5,5,5));
     }
 
     private void layoutComponents(){
@@ -115,9 +116,19 @@ public class ViewMainFrameES extends JFrame {
         add(startButton, gbc);
 
         // Прогресс-бар
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.gridx = 0;
         gbc.gridy = 6;
+        gbc.gridwidth = 3;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         add(progressBar, gbc);
+
+        // Лог панель
+        gbc.gridy = 7;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weighty = 1.0;
+// Оборачиваем лог в скролл-панель и добавляем в окно
+        add(new JScrollPane(logArea), gbc);
     }
 
     public void setProgressBar(int value, String text){
@@ -125,8 +136,9 @@ public class ViewMainFrameES extends JFrame {
         progressBar.setString(text);
     }
 
-//    public void appendLog(String message) {
-//        logArea.append(message + "\n");
-//        logArea.setCaretPosition(logArea.getDocument().getLength());
-//    }
+    public void appendLog(String message) {
+        logArea.append(message + "\n");
+        // Автоматически прокручиваем ползунок в самый низ
+        logArea.setCaretPosition(logArea.getDocument().getLength());
+    }
 }
