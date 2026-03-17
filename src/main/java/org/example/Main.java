@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello, Excel!");
+//        System.out.println("Hello, Excel!");
         SwingUtilities.invokeLater(() -> {
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -16,6 +16,7 @@ public class Main {
             new AppController(viewMainFrameES, serviceES);
             viewMainFrameES.setLocationRelativeTo(null);
             viewMainFrameES.setVisible(true);
+            viewMainFrameES.logArea.append("Let's split up.");
         });
     }
 }

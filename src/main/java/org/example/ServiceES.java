@@ -26,7 +26,8 @@ public class ServiceES {
                 if (row != null) dataRows.add(row);
             }
 
-            new File(outputDir).mkdirs();
+            new File(outputDir);
+//            String format = (String) formatComboBox.getSelectedItem();
             int totalFiles = (int) Math.ceil((double) dataRows.size() / rowsPerFile);
             String fileExtension = exportStrategy.getExtension();
 

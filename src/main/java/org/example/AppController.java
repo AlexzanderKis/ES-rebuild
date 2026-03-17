@@ -1,6 +1,9 @@
 package org.example;
 
 import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class AppController {
     private final ViewMainFrameES viewMainFrameES;
@@ -20,6 +23,8 @@ public class AppController {
 
     private void chooseFile() {
         JFileChooser chooser = new JFileChooser();
+// Показывает только Эксель файлы при выборе файла
+        chooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Excel Files \"csv\", \"xls\", \"xlsx\"","csv","xls","xlsx"));
         if (chooser.showOpenDialog(viewMainFrameES) == JFileChooser.APPROVE_OPTION) {
             viewMainFrameES.filePathField.setText(chooser.getSelectedFile().getAbsolutePath());
         }
@@ -97,6 +102,13 @@ public class AppController {
                     viewMainFrameES.startButton.setEnabled(true);
                     viewMainFrameES.appendLog("Saving folder: "+outputPath);
                     viewMainFrameES.appendLog("--- Process over ---");
+
+// Открыть папку с сохранёнными файлами
+                    try {
+                        Desktop.getDesktop().open(new File(outputPath));
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 });
             }
         }).start();
