@@ -16,7 +16,7 @@ jobs:
     runs-on: windows-latest 
     # Добавляем принудительное использование Node 24 для устранения предупреждения на GITHUB
     env:
-    FORCE_JAVASCRIPT_ACTIONS_NODE24: true
+    FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
     - name: Скачивание кода из репозитория
