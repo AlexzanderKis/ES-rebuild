@@ -14,6 +14,8 @@ jobs:
   build-and-release:
     # Используем Windows, так как мы собираем .exe
     runs-on: windows-latest 
+    # Добавляем принудительное использование Node 24 для устранения предупреждения на GITHUB
+    FORCE_JAVASCRIPT_ACTIONS_NODE24: true
 
     steps:
     - name: Скачивание кода из репозитория
