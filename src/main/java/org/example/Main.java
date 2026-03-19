@@ -16,7 +16,7 @@ public class Main {
             new AppController(viewMainFrameES, serviceES);
             viewMainFrameES.setLocationRelativeTo(null);
             viewMainFrameES.setVisible(true);
-            viewMainFrameES.logArea.append("Let's split up. op");
+            viewMainFrameES.logArea.append("Let's split up.");
         });
     }
 }
