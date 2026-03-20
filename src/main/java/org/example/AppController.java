@@ -3,8 +3,8 @@ package org.example;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
-import java.util.Locale;
+import java.io.*;
+import java.util.*;
 
 public class AppController {
     private final ViewMainFrameES viewMainFrameES;

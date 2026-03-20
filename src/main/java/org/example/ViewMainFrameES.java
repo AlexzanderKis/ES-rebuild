@@ -86,7 +86,7 @@ public class ViewMainFrameES extends JFrame {
 
         gbc.gridx = 2;
         gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.anchor = GridBagConstraints.EAST;
         add(langPanel, gbc);
         gbc.anchor = GridBagConstraints.CENTER;
 // Выбор файла
