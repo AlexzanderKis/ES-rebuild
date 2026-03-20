@@ -43,11 +43,13 @@
                         </goals>
                         <configuration>
                             <headerType>gui</headerType>
+                            <icon>src/main/resources/decomp.ico</icon> <outfile>${project.build.directory}/ExcelSplitter.exe</outfile>
                             <outfile>${project.build.directory}/ExcelSplitter.exe</outfile>
                             <jar>${project.build.directory}/${project.artifactId}-${project.version}-jar-with-dependencies.jar</jar>
                             <errTitle>Excel Splitter Error</errTitle>
                             <classPath>
-                                <mainClass>package org.example.Main</mainClass> </classPath>
+                                <mainClass>package org.example.Main</mainClass>
+                            </classPath>
                             <jre>
                                 <path>%JAVA_HOME%;%PATH%</path>>
                                 <minVersion>21.0.0</minVersion>
