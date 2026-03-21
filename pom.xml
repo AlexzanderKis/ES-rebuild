@@ -45,36 +45,6 @@
         <plugins>
 
             <plugin>
-                <groupId>com.akathist.maven.plugins.launch4j</groupId>
-                <artifactId>launch4j-maven-plugin</artifactId>
-                <version>2.7.0</version>
-                <executions>
-                    <execution>
-                        <id>l4j-clui</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>launch4j</goal>
-                        </goals>
-                        <configuration>
-                            <headerType>gui</headerType>
-
-                            <icon>src/main/resources/decomp.ico</icon>
-
-                            <outfile>${project.build.directory}/ExcelSplitter.exe</outfile>
-                            <jar>${project.build.directory}/${project.artifactId}-${project.version}.jar</jar>
-                            <errTitle>Excel Splitter Error</errTitle>
-                            <classPath>
-                                <mainClass>org.example.Main</mainClass> </classPath>
-                            <jre>
-                                <path>%JAVA_HOME%;%PATH%</path>
-                                <minVersion>21.0.0</minVersion>
-                            </jre>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
@@ -87,12 +57,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-<!--                <version>3.5.2</version>-->
+                <version>3.5.2</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.apache.logging.log4j</groupId>
                         <artifactId>log4j-transform-maven-shade-plugin-extensions</artifactId>
-                        <version>0.1.0</version>
+                        <version>0.2.0</version>
                     </dependency>
                 </dependencies>
                 <executions>
@@ -129,6 +99,40 @@
                     </execution>
                 </executions>
             </plugin>
+
+<!--// это должно быть в конце >launch4j-maven-plugin< -->
+            <plugin>
+                <groupId>com.akathist.maven.plugins.launch4j</groupId>
+                <artifactId>launch4j-maven-plugin</artifactId>
+                <version>2.7.0</version>
+                <executions>
+                    <execution>
+                        <id>l4j-clui</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>launch4j</goal>
+                        </goals>
+                        <configuration>
+                            <headerType>gui</headerType>
+
+                            <icon>src/main/resources/decomp.ico</icon>
+
+                            <outfile>${project.build.directory}/ExcelSplitter.exe</outfile>
+                            <jar>${project.build.directory}/${project.artifactId}-${project.version}.jar</jar>
+                            <errTitle>Excel Splitter Error</errTitle>
+                            <classPath>
+                                <mainClass>org.example.Main</mainClass>
+                            </classPath>
+
+                            <jre>
+                                <path>%JAVA_HOME%;%PATH%</path>
+                                <minVersion>21.0.0</minVersion>
+                            </jre>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 </project>
