@@ -3,7 +3,8 @@ package org.example;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.util.*;
 
 public class AppController {
     private final ViewMainFrameES viewMainFrameES;
@@ -19,6 +20,9 @@ public class AppController {
         viewMainFrameES.browseButton.addActionListener(e -> chooseFile());
         viewMainFrameES.outputBrowseButton.addActionListener(e -> chooseDirectory());
         viewMainFrameES.startButton.addActionListener(e -> startSplitting());
+        viewMainFrameES.langRU.addActionListener(e -> viewMainFrameES.setLanguage(Locale.of("ru")));
+        viewMainFrameES.langEN.addActionListener(e -> viewMainFrameES.setLanguage(Locale.of("en")));
+        viewMainFrameES.getLocalizedString("log_start");
     }
 
     private void chooseFile() {
